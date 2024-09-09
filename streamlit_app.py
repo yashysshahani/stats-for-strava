@@ -1,4 +1,7 @@
 import streamlit as st
+import strava_api
+import activities
+import data_analysis
 
 st.title("🎈 My new app")
 st.write(
