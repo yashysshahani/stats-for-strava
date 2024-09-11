@@ -1,4 +1,5 @@
 import pandas as pd
+import streamlit as st
 
 class Activities:
     def __init__(self, data):
@@ -7,7 +8,7 @@ class Activities:
         else:
             self._data = pd.DataFrame(data)
 
-        self._units = "m"
+        self._units = "Meters"
 
     @property
     def data(self):
@@ -35,14 +36,14 @@ class Activities:
             
         # modify units
         if units:
-            if units == "km":
+            if units == "Kilometers":
                 mod_data["distance"] = mod_data["distance"].apply(
                     lambda dist: (dist / 1000))
-                self._units = "km"
-            if units == "miles":
+                self._units = "Kilometers"
+            if units == "Miles":
                 mod_data["distance"] = mod_data["distance"].apply(
                     lambda dist: (dist * 0.000621371))
-                self._units = "miles"
+                self._units = "Miles"
             
         return mod_data
     

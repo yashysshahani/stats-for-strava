@@ -1,4 +1,7 @@
 import requests
+import streamlit as st
+import data_analysis
+from activities import Activities
 
 def get_access_token(client_id, client_secret, code):
     response = requests.post(
@@ -26,6 +29,7 @@ def get_activities(access_token, per_page=30, page=1):
     )
     return response.json()
 
+@st.cache_data
 def fetch_all_activities(access_token):
     activities = []
     page = 1
@@ -43,7 +47,6 @@ def fetch_all_activities(access_token):
             activities.extend(current_activities)
             page += 1 # move to next page
     
-            # check if we at end of ativities
             if len(current_activities) < per_page:
                 break
         else:
