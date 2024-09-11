@@ -6,7 +6,7 @@ import webbrowser as wb
 class Authorization:
     CLIENT_ID = "130208"
     CLIENT_SECRET = "27e2ad6b4be13544e7e02fbe523c7d20d8a52f4a"
-    REDIRECT_URI = "http://statsforstrava.streamlit.app"
+    REDIRECT_URI = "https://statsforstrava.streamlit.app/"
 
     def __init__(self):
         pass
