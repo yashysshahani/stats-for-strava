@@ -5,6 +5,7 @@ import plotly.io as pio
 import streamlit as st
 import pandas as pd
 from activities import Activities
+import numpy as np
 
 def calc_cum_dist(df):
     df["distance"] = df["distance"].fillna(0)
@@ -65,7 +66,7 @@ def cum_dist_plot(data):
 def activity_dist_scatter(data):
     df = data.data
     df["year"] = df["year"].astype(str)
-    df["distance"] = df["distance"].fillna(0)
+    df["distance"] = df["distance"].replace(0, np.nan, inplace=True)
     fig = px.scatter(df, x='mthday', y='distance', color='year',
                 title='Distance Scatter',
                 labels={'mthday': 'Date', 'distance': f'Distance ({data.units})'})
