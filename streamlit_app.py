@@ -51,10 +51,3 @@ if __name__ == "__main__":
             data_analysis.dist_freq_hist(cal_activities)
             data_analysis.dist_heatmap(cal_activities)
 
-    if st.session_state.get("strava_auth"):
-        access_token = st.session_state["strava_auth"].get("access_token")
-        if access_token:
-            all_activities = authorization.fetch_all_activities(access_token)
-            # Display or process the activities using Streamlit components
-            st.write(all_activities)  # Example display
-
