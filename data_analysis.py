@@ -23,7 +23,6 @@ from datetime import datetime
 import pandas as pd
 
 def calendarify(data, units):
-    data = data.data
     # Convert start_date to datetime and extract year, month, and formatted dates
     data["start_date"] = pd.to_datetime(data["start_date"], errors='coerce')
     data["year"] = data["start_date"].dt.year
