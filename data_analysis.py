@@ -56,7 +56,7 @@ def cum_dist_plot(data):
               title='Yearly Cumulative Distance',
               labels={'mthday': 'Date', 'yearly_cum_dist': f'Yearly Cumulative Distance ({data.units})'},
              line_shape="hv")
-    fig.update_layout(xaxis=dict(tickformat="%b-%d"))
+    fig.update_layout(xaxis=dict(tickformat="%b"))
     fig.update_traces(connectgaps=False)
     st.plotly_chart(fig)
     
@@ -69,8 +69,7 @@ def activity_dist_scatter(data):
     fig = px.scatter(filtered_df, x='mthday', y='distance', color='year',
                 title='Distance Scatter',
                 labels={'mthday': 'Date', 'distance': f'Distance ({data.units})'})
-    fig.update_layout(xaxis=dict(tickformat="%b-%d"))
-    fig.update_traces(connectgaps=True)
+    fig.update_layout(xaxis=dict(tickformat="%b"))
 
     fig = st.plotly_chart(fig)
     return fig
@@ -81,7 +80,7 @@ def dist_freq_hist(data):
     fig = px.histogram(filtered_df, x='distance', color='year',
                 title='Mileage Frequency',
                 labels={'mthday': 'Date', 'distance': f'Distance ({data.units})'})
-    fig.update_layout(xaxis=dict(tickformat="%b-%d"))
+    fig.update_layout(xaxis=dict(tickformat="%b"))
     
     fig = st.plotly_chart(fig)
     return fig

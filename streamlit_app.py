@@ -7,6 +7,7 @@ from urllib.parse import urlparse, parse_qs
 
 # Title
 st.title("🚴 Stats for Strava")
+st.subheader("Stats for Strava is still in its infancy! Many more features coming soon...")
 
 def get_strava_code():
     try:
