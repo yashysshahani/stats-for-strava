@@ -65,8 +65,8 @@ def cum_dist_plot(data):
 def activity_dist_scatter(data):
     df = data.data
     df["year"] = df["year"].astype(str)
+    df = df.sort_values("mthday")
     filtered_df = df[df['distance'] != 0]
-    filtered_df = filtered_df.sort_values("mthday")
     fig = px.scatter(filtered_df, x='mthday', y='distance', color='year',
                 title='Distance Scatter',
                 labels={'mthday': 'Date', 'distance': f'Distance ({data.units})'})
