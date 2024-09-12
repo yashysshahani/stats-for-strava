@@ -2,13 +2,13 @@ import pandas as pd
 import streamlit as st
 
 class Activities:
-    def __init__(self, data):
+    def __init__(self, data, units="Meters"):
         if isinstance(data, pd.DataFrame):
             self._data = data
         else:
             self._data = pd.DataFrame(data)
 
-        self._units = "Meters"
+        self._units = units
 
     @property
     def data(self):
@@ -44,6 +44,7 @@ class Activities:
                 mod_data["distance"] = mod_data["distance"].apply(
                     lambda dist: (dist * 0.000621371))
                 self._units = "Miles"
+                
             
         return mod_data
     

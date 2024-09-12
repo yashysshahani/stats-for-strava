@@ -44,7 +44,7 @@ if __name__ == "__main__":
                 st.session_state.activities = activities
             activities = st.session_state.activities
             activity_df = activities.mod_activities(sport_type=selected_activity, units=selected_unit)
-            cal_activities = data_analysis.calendarify(activity_df)
+            cal_activities = data_analysis.calendarify(activity_df, units=selected_unit)
 
             data_analysis.cum_dist_plot(cal_activities)
             data_analysis.activity_dist_scatter(cal_activities)
