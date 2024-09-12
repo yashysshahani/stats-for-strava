@@ -49,7 +49,7 @@ def calendarify(data):
 
     # Calculate cumulative distance
     df = calc_cum_dist(df)
-    return Activities(data, units=data.units)
+    return Activities(df, units=data.units)
 
 def cum_dist_plot(data):
     df = data.data
