@@ -44,7 +44,8 @@ class Activities:
                 mod_data["distance"] = mod_data["distance"].apply(
                     lambda dist: (dist * 0.000621371))
                 self._units = "Miles"
-                
+
+        self._data = mod_data
             
-        return mod_data
+        return self
     

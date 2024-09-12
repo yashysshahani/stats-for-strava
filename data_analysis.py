@@ -23,18 +23,19 @@ from datetime import datetime
 import pandas as pd
 
 def calendarify(data):
+    df = data.data
     # Convert start_date to datetime and extract year, month, and formatted dates
-    data["start_date"] = pd.to_datetime(data["start_date"], errors='coerce')
-    data["year"] = data["start_date"].dt.year
-    data["month"] = data["start_date"].dt.month
-    data["mthday"] = data["start_date"].dt.strftime("%d-%b")
-    data["yearmthday"] = data["start_date"].dt.strftime("%Y-%d-%b")
+    df["start_date"] = pd.to_datetime(df["start_date"], errors='coerce')
+    df["year"] = df["start_date"].dt.year
+    df["month"] = df["start_date"].dt.month
+    df["mthday"] = df["start_date"].dt.strftime("%d-%b")
+    df["yearmthday"] = df["start_date"].dt.strftime("%Y-%d-%b")
 
     # Sort data by start_date
-    data = data.sort_values("start_date").reset_index(drop=True)
+    df = df.sort_values("start_date").reset_index(drop=True)
 
     # Generate a complete date range from the start year to now
-    start_year = data["year"].min()
+    start_year = df["year"].min()
     start_date = datetime(start_year, 1, 1)
     end_date = datetime.now()
     all_dates = pd.date_range(start=start_date, end=end_date, name="yearmthday").to_frame(index=False)
@@ -44,10 +45,10 @@ def calendarify(data):
     all_dates["yearmthday"] = all_dates["yearmthday"].dt.strftime("%Y-%d-%b")  # Ensure same format as data
 
     # Merge the complete date range with the original data
-    data = pd.merge(all_dates, data, on=["yearmthday", "mthday", "year", "month"], how="left")
+    df = pd.merge(all_dates, df, on=["yearmthday", "mthday", "year", "month"], how="left")
 
     # Calculate cumulative distance
-    data = calc_cum_dist(data)
+    df = calc_cum_dist(df)
     return Activities(data, units=data.units)
 
 def cum_dist_plot(data):
