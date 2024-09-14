@@ -4,6 +4,7 @@ from activities import Activities
 import data_analysis
 import authorization
 from urllib.parse import urlparse, parse_qs
+import visualization
 
 # Title
 st.title("🚴 Stats for Strava")
@@ -27,7 +28,7 @@ if __name__ == "__main__":
 
         # Strava Authorization Button
         auth_url = auth.get_auth_url()
-        st.link_button("Authorize with Strava", url=auth_url)
+        st.link_button("Connect with Strava", url=auth_url)
 
     else:
         col1, col2 = st.columns(2)
@@ -47,8 +48,8 @@ if __name__ == "__main__":
             activity_df = activities.mod_activities(sport_type=selected_activity, units=selected_unit)
             cal_activities = data_analysis.calendarify(activity_df, units=selected_unit)
 
-            data_analysis.cum_dist_plot(cal_activities)
-            data_analysis.activity_dist_scatter(cal_activities)
-            data_analysis.dist_freq_hist(cal_activities)
-            data_analysis.dist_heatmap(cal_activities)
+            visualization.cum_dist_plot(cal_activities)
+            visualization.activity_dist_scatter(cal_activities)
+            visualization.dist_freq_hist(cal_activities)
+            visualization.dist_heatmap(cal_activities)
 
