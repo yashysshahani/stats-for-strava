@@ -48,8 +48,13 @@ if __name__ == "__main__":
             activity_df = activities.mod_activities(sport_type=selected_activity, units=selected_unit)
             cal_activities = data_analysis.calendarify(activity_df, units=selected_unit)
 
-            visualization.cum_dist_plot(cal_activities)
-            visualization.activity_dist_scatter(cal_activities)
-            visualization.dist_freq_hist(cal_activities)
-            visualization.dist_heatmap(cal_activities)
+            tab1, tab2, tab3, tab4 = st.tabs(["Cumulative Distance", "Activity Distribution", "Distance Frequency", "Distance Heatmap"])
+            with tab1:
+                visualization.cum_dist_plot(cal_activities)
+            with tab2: 
+                visualization.activity_dist_scatter(cal_activities)
+            with tab3:
+                visualization.dist_freq_hist(cal_activities)
+            with tab4:
+                visualization.dist_heatmap(cal_activities)
 
