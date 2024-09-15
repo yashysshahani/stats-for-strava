@@ -23,12 +23,16 @@ if __name__ == "__main__":
         st.session_state.access_token = None
 
     if code:
-        auth.handle_access_token(code)
+        access_token = auth.handle_access_token(code)
+        if st.session_state.access_token is None:
+            st.session_state.access_token = access_token
         try:
             page.page()
         except KeyError:
             st.session_state.clear()
-            auth_url = auth.get_auth_url()
+            auth_url = auth.get_auth_url(
+            )
+            auth.handle_access_token(code)
             st.write("Session expired. Please re-authorize. (1)")
             st.link_button("Connect with Strava", url=auth_url)
     else:
