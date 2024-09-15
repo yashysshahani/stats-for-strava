@@ -21,10 +21,8 @@ if __name__ == "__main__":
 
     if code:
         access_token = auth.handle_access_token(code)
-        if st.session_state.access_token is None:
-            st.session_state.access_token = access_token
         try:
-            page.page()
+            page.page(access_token)
         except KeyError:
             st.session_state.clear()
             auth_url = auth.get_auth_url(

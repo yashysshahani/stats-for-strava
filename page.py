@@ -6,9 +6,7 @@ import authorization
 import visualization
 import text
 
-def page(): 
-
-    access_token = st.session_state.access_token
+def page(access_token): 
 
     col1, col2 = st.columns(2)
     selected_activity = col1.selectbox("Select Activity Type", ["Ride", "Run", "Swim", "Other"])
