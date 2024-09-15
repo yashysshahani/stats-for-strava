@@ -10,7 +10,6 @@ import page
 
 # Title
 st.title("🚴 Stats for Strava")
-st.subheader("This app is in its infancy.")
 
 # Authorization
 if __name__ == "__main__":
