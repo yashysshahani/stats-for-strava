@@ -61,6 +61,9 @@ class Authorization:
         CLIENT_ID, CLIENT_SECRET, code
         )
         access_token = token_response.get("access_token")
+        if st.session_state.access_token is None:
+            st.session_state.access_token = access_token
+        access_token = st.session_state.access_token
         return access_token
     
 

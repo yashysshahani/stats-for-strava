@@ -19,19 +19,42 @@ if __name__ == "__main__":
         st.session_state.code = code
     code = st.session_state.code
 
-    if code:
-        access_token = auth.handle_access_token(code)
-        try:
-            page.page(access_token)
-        except KeyError:
-            st.session_state.clear()
-            auth_url = auth.get_auth_url(
-            )
+    if "access_token" not in st.session_state:
+        st.session_state.access_token = None
+
+    if st.session_state.get("access_token") is None:
+        if code:
             auth.handle_access_token(code)
-            st.write("Session expired. Please re-authorize. (1)")
+            try:
+                page.page()
+            except KeyError:
+                st.session_state.clear()
+                auth_url = auth.get_auth_url()
+                st.write("Session expired. Please re-authorize. (1)")
+                st.link_button("Connect with Strava", url=auth_url)
+        else:
+            st.subheader("Welcome!")
+            st.write("Hit the authorization button below to get insights.")
+            auth_url = auth.get_auth_url()
             st.link_button("Connect with Strava", url=auth_url)
+
     else:
-        st.subheader("Welcome!")
-        st.write("Hit the authorization button below to get insights.")
-        auth_url = auth.get_auth_url()
-        st.link_button("Connect with Strava", url=auth_url)
+        if st.session_state.code is None:
+            auth.get_strava_code()
+            auth.handle_access_token(code)
+            try:
+                page.page()
+            except KeyError:
+                st.session_state.clear()
+                auth_url = auth.get_auth_url()
+                st.write("Session expired. Please re-authorize. (2)")
+                st.link_button("Connect with Strava", url=auth_url)
+        else:
+            auth.handle_access_token(code)
+            try:
+                page.page()
+            except KeyError:
+                st.session_state.clear()
+                auth_url = auth.get_auth_url()
+                st.write("Session expired. Please re-authorize. (3)")
+                st.link_button("Connect with Strava", url=auth_url)
