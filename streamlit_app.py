@@ -19,9 +19,6 @@ if __name__ == "__main__":
         st.session_state.code = code
     code = st.session_state.code
 
-    if "access_token" not in st.session_state:
-        st.session_state.access_token = None
-
     if code:
         access_token = auth.handle_access_token(code)
         if st.session_state.access_token is None:
