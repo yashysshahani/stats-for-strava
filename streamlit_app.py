@@ -2,59 +2,60 @@ import streamlit as st
 import strava_api
 from activities import Activities
 import data_analysis
-import authorization
+from authorization import Authorization
 from urllib.parse import urlparse, parse_qs
 import visualization
+import text
+import page
 
 # Title
 st.title("🚴 Stats for Strava")
-st.subheader("Stats for Strava is still in its infancy! Many more features coming soon...")
-
-def get_strava_code():
-    try:
-        code = st.query_params["code"]
-    except KeyError:
-        return False
-    return code
+st.subheader("This app is in its infancy.")
 
 # Authorization
 if __name__ == "__main__":
-    auth = authorization.Authorization()
-    code = get_strava_code()
+    auth = Authorization()
+    code = auth.get_strava_code()
+    if st.session_state.get("code") is None:
+        st.session_state.code = code
+    code = st.session_state.code
 
-    if not code:
-        st.subheader("Welcome!")
-        st.write("Hit the authorization button below to get insights.")
+    if "access_token" not in st.session_state:
+        st.session_state.access_token = None
 
-        # Strava Authorization Button
-        auth_url = auth.get_auth_url()
-        st.link_button("Connect with Strava", url=auth_url)
+    if st.session_state.get("access_token") is None:
+        if code:
+            auth.handle_access_token(code)
+            try:
+                page.page()
+            except KeyError:
+                st.session_state.clear()
+                auth_url = auth.get_auth_url()
+                st.write("Session expired. Please re-authorize. (1)")
+                st.link_button("Connect with Strava", url=auth_url)
+        else:
+            st.subheader("Welcome!")
+            st.write("Hit the authorization button below to get insights.")
+            auth_url = auth.get_auth_url()
+            st.link_button("Connect with Strava", url=auth_url)
 
     else:
-        col1, col2 = st.columns(2)
-        selected_activity = col1.selectbox("Select Activity Type", ["Ride", "Run", "Swim", "Other"])
-        selected_unit = col2.selectbox("Select Distance Unit", ["Miles", "Kilometers"])
-
-        if st.button("Show Activities"):
-            token_response = strava_api.get_access_token(
-            auth.CLIENT_ID, auth.CLIENT_SECRET, code
-            )
-            access_token = token_response.get("access_token")
-            all_activities = strava_api.fetch_all_activities(access_token)
-            activities = Activities(all_activities)
-            if 'activities' not in st.session_state:
-                st.session_state.activities = activities
-            activities = st.session_state.activities
-            activity_df = activities.mod_activities(sport_type=selected_activity, units=selected_unit)
-            cal_activities = data_analysis.calendarify(activity_df, units=selected_unit)
-
-            tab1, tab2, tab3, tab4 = st.tabs(["Cumulative Distance", "Activity Distribution", "Distance Frequency", "Distance Heatmap"])
-            with tab1:
-                visualization.cum_dist_plot(cal_activities)
-            with tab2: 
-                visualization.activity_dist_scatter(cal_activities)
-            with tab3:
-                visualization.dist_freq_hist(cal_activities)
-            with tab4:
-                visualization.dist_heatmap(cal_activities)
-
+        if st.session_state.code is None:
+            auth.get_strava_code()
+            auth.handle_access_token(code)
+            try:
+                page.page()
+            except KeyError:
+                st.session_state.clear()
+                auth_url = auth.get_auth_url()
+                st.write("Session expired. Please re-authorize. (2)")
+                st.link_button("Connect with Strava", url=auth_url)
+        else:
+            auth.handle_access_token(code)
+            try:
+                page.page()
+            except KeyError:
+                st.session_state.clear()
+                auth_url = auth.get_auth_url()
+                st.write("Session expired. Please re-authorize. (3)")
+                st.link_button("Connect with Strava", url=auth_url)

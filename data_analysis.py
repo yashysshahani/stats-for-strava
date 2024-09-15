@@ -16,8 +16,8 @@ def calc_cum_dist(df):
 
     return df
 
+@st.cache_resource()
 def calendarify(data, units):
-    st.cache_data.clear()
     # Convert start_date to datetime and extract year, month, and formatted dates
     data["start_date"] = pd.to_datetime(data["start_date"], errors='coerce')
     data["year"] = data["start_date"].dt.year
@@ -32,6 +32,7 @@ def calendarify(data, units):
     all_dates = pd.date_range(start=start_date, end=end_date, name="yearmthday").to_frame(index=False)
     all_dates["year"] = all_dates["yearmthday"].dt.year
     all_dates["month"] = all_dates["yearmthday"].dt.month
+    all_dates["day_of_month"] = all_dates["yearmthday"].dt.day
     all_dates["mthday"] = all_dates["yearmthday"].dt.strftime("%d-%b")
     all_dates["yearmthday"] = all_dates["yearmthday"].dt.strftime("%Y-%d-%b")
 
