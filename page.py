@@ -32,6 +32,7 @@ def page():
 
         except TypeError:
             st.write(f"An error occurred while processing your data for {selected_activity}.")
+            exit()
 
         text.cum_metric(cal_activities)
 
