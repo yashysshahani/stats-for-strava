@@ -24,10 +24,14 @@ def page():
 
     if st.button("Generate nerd stuff..."):
 
-        all_activities = strava_api.fetch_all_activities(access_token)
-        activities = Activities(all_activities)
-        activity_df = activities.mod_activities(sport_type=selected_activity, units=selected_unit)
-        cal_activities = data_analysis.calendarify(activity_df, units=selected_unit)
+        try:
+            all_activities = strava_api.fetch_all_activities(access_token)
+            activities = Activities(all_activities)
+            activity_df = activities.mod_activities(sport_type=selected_activity, units=selected_unit)
+            cal_activities = data_analysis.calendarify(activity_df, units=selected_unit)
+
+        except TypeError:
+            st.write(f"An error occurred while processing your data for {selected_activity}.")
 
         text.cum_metric(cal_activities)
 
