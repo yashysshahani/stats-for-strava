@@ -11,7 +11,15 @@ def page():
     access_token = st.session_state.access_token
 
     col1, col2 = st.columns(2)
-    selected_activity = col1.selectbox("Select Activity Type", ["Ride", "Run", "Swim", "Other"])
+    selected_activity = col1.selectbox("Select Activity Type", ["Ride", "Run", "Swim", 
+                                                                "AlpineSki", "BackcountrySki", "Canoeing", "Crossfit",
+                                                                "EBikeRide", "Elliptical", "Golf", "Handcycle", "Hike", "IceSkate",
+                                                                "InlineSkate", "Kayaking", "Kitesurf", "NordicSki",
+                                                                "RockClimbing", "RollerSki", "Rowing",
+                                                                "Sail", "Skateboard", "Snowboard", "Snowshoe", "Soccer",
+                                                                "StairStepper", "StandUpPaddling", "Surfing",
+                                                                "Velomobile", "VirtualRide", "VirtualRun", "Walk",
+                                                                  "WeightTraining", "Wheelchair", "Windsurf", "Workout", "Yoga"])
     selected_unit = col2.selectbox("Select Distance Unit", ["Miles", "Kilometers"])
 
     if st.button("Generate nerd stuff..."):
