@@ -36,7 +36,10 @@ def page():
 
         text.cum_metric(cal_activities)
 
-        tab1, tab2, tab3, tab4 = st.tabs(["Cumulative Distance", "Activity Distribution", "Distance Frequency", "Distance Heatmap"])
+        tab1, tab2 = st.tabs(["Cumulative Distance",
+                            #   "Activity Distribution",
+                            #   "Distance Frequency",
+                               "Distance Heatmap"])
         with tab1:
             visualization.cum_dist_plot(cal_activities)
         with tab2: 
