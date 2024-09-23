@@ -32,12 +32,12 @@ if __name__ == "__main__":
                 st.session_state.clear()
                 auth_url = auth.get_auth_url()
                 st.write("Session expired. Please re-authorize. (1)")
-                st.link_button("Connect with Strava", url=auth_url)
+                auth_button.auth_button()
         else:
             st.subheader("Welcome!")
             st.write("Hit the authorization button below to get insights.")
             auth_url = auth.get_auth_url()
-            st.link_button("Connect with Strava", url=auth_url)
+            auth_button.auth_button()
 
     else:
         if st.session_state.code is None:
