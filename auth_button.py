@@ -11,7 +11,7 @@ def img_to_bytes(img_path):
     return encoded_img
 
 def auth_button():
-    img = img_to_bytes("strava.png")
+    img = img_to_bytes("connect.png")
     st.markdown(
         f'''<a href="https://www.strava.com/oauth/authorize?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&response_type=code&approval_prompt=auto&scope=read_all,activity:read_all" target="_blank">
         <img src="data:image/png;base64,{img}">
