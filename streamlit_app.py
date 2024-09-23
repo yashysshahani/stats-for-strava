@@ -35,7 +35,6 @@ if __name__ == "__main__":
                 auth_button.auth_button()
         else:
             st.subheader("Welcome!")
-            st.write("Hit the authorization button below to get insights.")
             auth_url = auth.get_auth_url()
             auth_button.auth_button()
 
