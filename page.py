@@ -42,10 +42,10 @@ def page():
                                "Distance Heatmap"])
         with tab1:
             visualization.cum_dist_plot(cal_activities)
-        with tab2: 
-            visualization.activity_dist_scatter(cal_activities)
-        with tab3:
-            visualization.dist_freq_hist(cal_activities)
-        with tab4:
+        # with tab2: 
+        #     visualization.activity_dist_scatter(cal_activities)
+        # with tab3:
+        #     visualization.dist_freq_hist(cal_activities)
+        with tab2:
             visualization.dist_heatmap(cal_activities)
 
