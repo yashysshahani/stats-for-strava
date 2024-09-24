@@ -16,16 +16,25 @@ def calc_cum_dist(df):
 
     return df
 
+def calc_cum_activities(df):
+    years = range(df["year"].min(), datetime.now().year + 1)
+    df.loc[:, "yearly_cum_activities"] = 0
+
+    for year in years:
+        sub_df = df[df["year"] == year].copy()
+        sub_df["yearly_cum_activities"] = sub_df["name"].notnull().cumsum()
+        df.loc[df["year"] == year, "yearly_cum_activities"] = sub_df["yearly_cum_activities"]
+
+    return df
+
 @st.cache_resource()
 def calendarify(data, units):
-    # Convert start_date to datetime and extract year, month, and formatted dates
     data["start_date"] = pd.to_datetime(data["start_date"], errors='coerce')
     data["year"] = data["start_date"].dt.year
     data["month"] = data["start_date"].dt.month
     data["mthday"] = data["start_date"].dt.strftime("%d-%b")
     data["yearmthday"] = data["start_date"].dt.strftime("%Y-%d-%b")
 
-    # Generate a complete date range from the start year to now
     start_year = data["year"].min()
     start_date = datetime(start_year, 1, 1)
     end_date = datetime.now()
@@ -36,11 +45,9 @@ def calendarify(data, units):
     all_dates["mthday"] = all_dates["yearmthday"].dt.strftime("%d-%b")
     all_dates["yearmthday"] = all_dates["yearmthday"].dt.strftime("%Y-%d-%b")
 
-    # Merge the complete date range with the original data
     data = pd.merge(all_dates, data, on=["yearmthday", "mthday", "year", "month"], how="left")
     data["name"] = data["name"].fillna("-")
 
-    # Calculate cumulative distance
     data = calc_cum_dist(data)
 
     return Activities(data, units=units)
