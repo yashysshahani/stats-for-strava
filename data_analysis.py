@@ -22,7 +22,7 @@ def calc_cum_activities(df):
 
     for year in years:
         sub_df = df[df["year"] == year].copy()
-        sub_df["yearly_cum_activities"] = sub_df["name"].astype(bool).cumsum()
+        sub_df["yearly_cum_activities"] = sub_df["resource_state"].astype(bool).cumsum()
         df.loc[df["year"] == year, "yearly_cum_activities"] = sub_df["yearly_cum_activities"]
 
     return df
