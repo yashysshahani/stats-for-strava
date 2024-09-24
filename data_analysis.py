@@ -49,5 +49,6 @@ def calendarify(data, units):
     data["name"] = data["name"].fillna("-")
 
     data = calc_cum_dist(data)
-
+    data = calc_cum_activities(data)
+    
     return Activities(data, units=units)
