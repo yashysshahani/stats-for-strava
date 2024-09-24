@@ -22,6 +22,7 @@ def calc_cum_activities(df):
             df["temp"] = df["name"].replace("-", 0)
         else:
             df["temp"] = df["name"].replace(activity, 1)
+            
     years = range(df["year"].min(), datetime.now().year + 1)
     df.loc[:, "yearly_cum_activities"] = 0
 
