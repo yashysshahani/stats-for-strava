@@ -16,24 +16,24 @@ def calc_cum_dist(df):
 
     return df
 
-def calc_cum_activities(df):
-    for activity in df["name"]:
-        if activity == "-":
-            df["temp"] = df["name"].replace("-", 0)
-        else:
-            df["temp"] = df["name"].replace(activity, 1)
-            
-    years = range(df["year"].min(), datetime.now().year + 1)
-    df.loc[:, "yearly_cum_activities"] = 0
+# def calc_cum_activities(df):
+#     for activity in df["name"]:
+#         if activity == "-":
+#             df["temp"] = df["name"].replace("-", 0)
+#         else:
+#             df["temp"] = df["name"].replace(activity, 1)
 
-    for year in years:
-        sub_df = df[df["year"] == year].copy()
-        sub_df["yearly_cum_activities"] = sub_df["temp"].cumsum().astype(int)
-        df.loc[df["year"] == year, "yearly_cum_activities"] = sub_df["yearly_cum_activities"]
+#     years = range(df["year"].min(), datetime.now().year + 1)
+#     df.loc[:, "yearly_cum_activities"] = 0
 
-    df = df.drop(columns=["temp"])
+#     for year in years:
+#         sub_df = df[df["year"] == year].copy()
+#         sub_df["yearly_cum_activities"] = sub_df["temp"].cumsum().astype(int)
+#         df.loc[df["year"] == year, "yearly_cum_activities"] = sub_df["yearly_cum_activities"]
 
-    return df
+#     df = df.drop(columns=["temp"])
+
+#     return df
 
 @st.cache_resource()
 def calendarify(data, units):
@@ -57,6 +57,6 @@ def calendarify(data, units):
     data["name"] = data["name"].fillna("-")
 
     data = calc_cum_dist(data)
-    data = calc_cum_activities(data)
+    # data = calc_cum_activities(data)
 
     return Activities(data, units=units)
