@@ -35,7 +35,7 @@ def page():
             exit()
 
         text.cum_metric(cal_activities)
-        text.cum_activity_metric(cal_activities)
+        # text.cum_activity_metric(cal_activities)
 
         tab1, tab2 = st.tabs(["Cumulative Distance",
                             #   "Activity Distribution",
