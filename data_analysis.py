@@ -22,7 +22,7 @@ def calc_cum_activities(df):
 
     for year in years:
         sub_df = df[df["year"] == year].copy()
-        sub_df["yearly_cum_activities"] = sub_df["name"].notnull().cumsum()
+        sub_df["yearly_cum_activities"] = sub_df["name"].astype(str).apply(lambda x: 1).cumsum()
         df.loc[df["year"] == year, "yearly_cum_activities"] = sub_df["yearly_cum_activities"]
 
     return df
@@ -50,5 +50,5 @@ def calendarify(data, units):
 
     data = calc_cum_dist(data)
     data = calc_cum_activities(data)
-    
+
     return Activities(data, units=units)
