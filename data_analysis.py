@@ -17,12 +17,14 @@ def calc_cum_dist(df):
     return df
 
 def calc_cum_activities(df):
+    df = df.copy()
+    df["resource_state"] = df["resource_state"].fillna(0)
     years = range(df["year"].min(), datetime.now().year + 1)
     df.loc[:, "yearly_cum_activities"] = 0
 
     for year in years:
         sub_df = df[df["year"] == year].copy()
-        sub_df["yearly_cum_activities"] = sub_df["resource_state"].notnull().cumsum()
+        sub_df["yearly_cum_activities"] = sub_df["resource_state"].cumsum()
         df.loc[df["year"] == year, "yearly_cum_activities"] = sub_df["yearly_cum_activities"]
 
     return df
