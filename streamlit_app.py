@@ -1,11 +1,6 @@
 import streamlit as st
-import strava_api
-from activities import Activities
-import data_analysis
 from authorization import Authorization
 from urllib.parse import urlparse, parse_qs
-import visualization
-import text
 import page
 import auth_button
 
