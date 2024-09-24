@@ -50,3 +50,5 @@ def page():
         with tab2:
             visualization.dist_heatmap(cal_activities)
 
+        st.write(cal_activities.data)
+
